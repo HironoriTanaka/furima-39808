@@ -4,23 +4,18 @@
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
-| user_id            | references | null: false, foreign_key: true |
 | nickname           | string     | null: false                    |
-| mail_address       | string     | null: false                    |
-| password           | string     | null: false                    |
+| email              | string     | null: false, unique: true      |
+| encrypted_password | string     | null: false                    |
 | lastname_kanji     | string     | null: false                    |
 | firstname_kanji    | string     | null: false                    |
 | lastname_kana      | string     | null: false                    |
 | firstname_kana     | string     | null: false                    |
-| birthdate_year     | string     | null: false                    |
-| birthdate_month    | string     | null: false                    |
-| birthdate_date     | string     | null: false                    |
+| birth              | date       | null: false                    |
 
 ### Association
 
-- has_many :item_id
-- has_many :purchase_id
-- has_many :delivery_id
+- has_many :purchase_ids,item_ids
 
 ## items テーブル
 
@@ -37,7 +32,7 @@
 
 ### Association
 
-- belongs_to :user_id
+- belongs_to :user
 
 ## purchase テーブル
 
@@ -48,25 +43,25 @@
 
 ### Association
 
-- belongs_to :user_id
+- belongs_to :user
 - belongs_to :item_id
 
 ## delivery テーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
-| delivery_id        | references | null: false, foreign_key: true |
 | postal_code        | string     | null: false                    |
 | prefectures        | string     | null: false                    |
 | city               | string     | null: false                    |
 | block              | string     | null: false                    |
-| building_name      | string     | null: false                    |
+| building_name      | string     |                                |
 | tel                | string     | null: false                    |
+| purchase_id        | references | null: false                    |
 
 ### Association
 
-- belongs_to :user_id
-- belongs_to :item_id
+- belongs_to :purchase_id
+- belongs_to_active_hash :prefectures
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
