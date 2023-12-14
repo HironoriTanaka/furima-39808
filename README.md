@@ -15,57 +15,62 @@
 
 ### Association
 
-- has_many :purchase_ids,items
+- has_many :item_purchases
+- has_many :items
 
 ## items テーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
-| image              | string     | null: false                    |
 | name               | string     | null: false                    |
-| description        | string     | null: false                    |
+| description        | text       | null: false                    |
 | category           | string     | null: false                    |
 | status             | string     | null: false                    |
 | postage_type       | string     | null: false                    |
 | prefectures        | string     | null: false                    |
 | preparation_days   | integer    | null: false                    |
-| value              | integar    | null: false                    |
+| price              | integer    | null: false                    |
 
 ### Association
 
+- has_one :item_purchase
 - belongs_to :user
+- belongs_to_active_hash :category
+- belongs_to_active_hash :status
+- belongs_to_active_hash :postage_type
 - belongs_to_active_hash :prefectures
+- belongs_to_active_hash :preparation_days
 
-## purchase テーブル
+## item_purchases テーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
 | item               | references | null: false, foreign_key: true |
 | user               | references | null: false, foreign_key: true |
-| purchase_id        | references | null: false, foreign_key: true |
+
 
 ### Association
 
 - belongs_to :item
 - belongs_to :user
-- belongs_to :purchase_id
 
-## delivery テーブル
+
+## purchase_infos テーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
 | postal_code        | string     | null: false                    |
-| prefectures        | string     | null: false                    |
+| prefectures        | string     | null: false, foreign_key: true |
 | city               | string     | null: false                    |
 | block              | string     | null: false                    |
 | building_name      | string     |                                |
 | tel                | string     | null: false                    |
-| purchase_id        | references | null: false                    |
+
 
 ### Association
 
-- belongs_to :purchase_id
-- belongs_to_active_hash :prefectures
+- has_one_active_hash :prefectures
+- has_one :item_purchase
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
