@@ -15,36 +15,40 @@
 
 ### Association
 
-- has_many :purchase_ids,item_ids
+- has_many :purchase_ids,items
 
 ## items テーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
-| item_id            | references | null: false, foreign_key: true |
-| item_image         | string     | null: false                    |
-| item_name          | string     | null: false                    |
-| item_description   | string     | null: false                    |
-| item_category      | string     | null: false                    |
-| item_status        | string     | null: false                    |
-| delivery_charge    | string     | null: false                    |
-| item_count         | string     | null: false                    |
+| image              | string     | null: false                    |
+| name               | string     | null: false                    |
+| description        | string     | null: false                    |
+| category           | string     | null: false                    |
+| status             | string     | null: false                    |
+| postage_type       | string     | null: false                    |
+| prefectures        | string     | null: false                    |
+| preparation_days   | integer    | null: false                    |
+| value              | integar    | null: false                    |
 
 ### Association
 
 - belongs_to :user
+- belongs_to_active_hash :prefectures
 
 ## purchase テーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
+| item               | references | null: false, foreign_key: true |
+| user               | references | null: false, foreign_key: true |
 | purchase_id        | references | null: false, foreign_key: true |
-| purchase_count     | string     | null: false                    |
 
 ### Association
 
+- belongs_to :item
 - belongs_to :user
-- belongs_to :item_id
+- belongs_to :purchase_id
 
 ## delivery テーブル
 
