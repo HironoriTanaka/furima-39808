@@ -24,23 +24,23 @@
 | ------------------ | ---------- | ------------------------------ |
 | name               | string     | null: false                    |
 | description        | text       | null: false                    |
-| category           | integer    | null: false                    |
-| status             | integer    | null: false                    |
-| postage_type       | integer    | null: false                    |
-| prefectures        | integer    | null: false                    |
-| preparation_days   | integer    | null: false                    |
+| category_id        | integer    | null: false                    |
+| status_id          | integer    | null: false                    |
+| postage_type_id    | integer    | null: false                    |
+| prefectures_id     | integer    | null: false                    |
+| preparation_days_id| integer    | null: false                    |
 | price              | integer    | null: false                    |
-| user               | references | null: false                    |
+| user               | references | null: false, foreign_key: true |
 
 ### Association
 
 - has_one :item_purchase
-- belongs_to :user
-- belongs_to_active_hash :category
-- belongs_to_active_hash :status
-- belongs_to_active_hash :postage_type
-- belongs_to_active_hash :prefectures
-- belongs_to_active_hash :preparation_days
+- has_one :user
+- belongs_to_active_hash :category_id
+- belongs_to_active_hash :status_id
+- belongs_to_active_hash :postage_type_id
+- belongs_to_active_hash :prefectures_id
+- belongs_to_active_hash :preparation_days_id
 
 ## item_purchases テーブル
 
@@ -48,7 +48,6 @@
 | ------------------ | ---------- | ------------------------------ |
 | item               | references | null: false, foreign_key: true |
 | user               | references | null: false, foreign_key: true |
-| purchase_info      | references | null: false, foreign_key: true |
 
 ### Association
 
@@ -62,17 +61,17 @@
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
 | postal_code        | string     | null: false                    |
-| prefectures        | integer    | null: false, foreign_key: true |
+| prefectures_id     | integer    | null: false, foreign_key: true |
 | city               | string     | null: false                    |
 | block              | string     | null: false                    |
 | building_name      | string     |                                |
 | tel                | string     | null: false                    |
-| item_purchase      | integer    | null: false, foreign_key: true |
+| item_purchase      | references | null: false, foreign_key: true |
 
 
 ### Association
 
-- has_one_active_hash :prefectures
+- belongs_to_active_hash :prefectures_id
 - belongs_to :item_purchase
 
 This README would normally document whatever steps are necessary to get the
