@@ -27,20 +27,20 @@
 | category_id        | integer    | null: false                    |
 | status_id          | integer    | null: false                    |
 | postage_type_id    | integer    | null: false                    |
-| prefectures_id     | integer    | null: false                    |
-| preparation_days_id| integer    | null: false                    |
+| prefecture_id      | integer    | null: false                    |
+| preparation_day_id | integer    | null: false                    |
 | price              | integer    | null: false                    |
 | user               | references | null: false, foreign_key: true |
 
 ### Association
 
+- belongs_to :user
 - has_one :item_purchase
-- has_one :user
 - belongs_to_active_hash :category_id
 - belongs_to_active_hash :status_id
 - belongs_to_active_hash :postage_type_id
-- belongs_to_active_hash :prefectures_id
-- belongs_to_active_hash :preparation_days_id
+- belongs_to_active_hash :prefecture_id
+- belongs_to_active_hash :preparation_day_id
 
 ## item_purchases テーブル
 
@@ -53,7 +53,7 @@
 
 - belongs_to :item
 - belongs_to :user
-- belongs_to :purchase_info
+- has_one :purchase_info
 
 
 ## purchase_infos テーブル
@@ -61,7 +61,7 @@
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
 | postal_code        | string     | null: false                    |
-| prefectures_id     | integer    | null: false, foreign_key: true |
+| prefecture_id      | integer    | null: false, foreign_key: true |
 | city               | string     | null: false                    |
 | block              | string     | null: false                    |
 | building_name      | string     |                                |
@@ -71,7 +71,7 @@
 
 ### Association
 
-- belongs_to_active_hash :prefectures_id
+- belongs_to_active_hash :prefecture_id
 - belongs_to :item_purchase
 
 This README would normally document whatever steps are necessary to get the
