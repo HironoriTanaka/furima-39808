@@ -1,20 +1,24 @@
 class ItemsController < ApplicationController
+  before_action :authenticate_user!, only: [:new]
+
   def index
   end
 
   def new
     @item = Item.new
-    # @item.item_imgs.new
-    @category_parent = Category.where(ancestry: nil)
   end
 
   def create
-    Item.create(item_params)
-    redirect_to '/'
+    @item = Item.new(item_params)
+    if @item.save
+      redirect_to root_path
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   private
   def item_params
-    params.require(:item).permit(:name, :image).merge(user_id: current_user.id)
+    params.require(:item).permit(:image, :name, :description, :category_id, :status_id, :postage_type_id, :prefecture_id, :preparation_day_id, :price).merge(user_id: current_user.id)
   end
 end
