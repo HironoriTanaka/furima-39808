@@ -4,7 +4,7 @@ class Item < ApplicationRecord
   belongs_to :user
   belongs_to :category
   belongs_to :status
-  belongs_to :postage_type, class_name: 'PostageType'
+  belongs_to :postage_type
   belongs_to :prefecture
   belongs_to :preparation_day, class_name: 'PreparationDay'
 
