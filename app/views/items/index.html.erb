@@ -149,7 +149,7 @@
         </div>
 
              <% end %>
- 
+
         <%= link_to "#" do %>
         <div class='item-img-content'>
           <%= image_tag "item-sample.png", class: "item-img" %>
@@ -174,10 +174,12 @@
         </div>
         <% end %>
       </li>
+
       <%# //商品のインスタンス変数になにか入っている場合、中身のすべてを展開できるようにしましょう %>
 
       <%# 商品がない場合は以下のダミー商品が表示されるようにしましょう %>
       <%# 商品がある場合は表示されないようにしましょう %>
+      <% if @items[0] == nil %>
       <li class='list'>
         <%= link_to '#' do %>
         <%= image_tag "https://tech-master.s3.amazonaws.com/uploads/curriculums/images/Rails1-4/sample.jpg", class: "item-img" %>
@@ -194,7 +196,9 @@
           </div>
         </div>
         <% end %>
+        <% end %>
       </li>
+
       <%# //商品がある場合は表示されないようにしましょう %>
       <%# //商品がない場合は以下のダミー商品が表示されるようにしましょう %>
     </ul>
