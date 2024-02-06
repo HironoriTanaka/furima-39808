@@ -53,10 +53,10 @@
 
 - belongs_to :item
 - belongs_to :user
-- has_one :purchase_info
+- has_one :purchase
 
 
-## purchase_infos テーブル
+## purchases テーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |

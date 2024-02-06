@@ -7,6 +7,7 @@ class Item < ApplicationRecord
   belongs_to :postage_type
   belongs_to :prefecture
   belongs_to :preparation_day, class_name: 'PreparationDay'
+  has_one :item_purchase
 
   validates :image, presence: true
   validates :name, presence: true
