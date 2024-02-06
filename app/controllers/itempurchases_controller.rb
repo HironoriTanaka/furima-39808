@@ -1,10 +1,17 @@
 class ItempurchasesController < ApplicationController
-  before_action :authenticate_user!, except: :index
+  before_action :authenticate_user!, except: [:index]
 
   def index
+  @item = Item.find(params[:item_id])
+  if user_signed_in?
+      if @item.item_purchase.present?
+    redirect_to root_path
+      else
     gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @item = Item.find(params[:item_id])
     @itempurchase_purchase = ItempurchasePurchase.new
+  end
+  end
   end
 
   def new
@@ -13,10 +20,11 @@ class ItempurchasesController < ApplicationController
 
   def create
     @itempurchase_purchase = ItempurchasePurchase.new(itempurchasepurchase_params)
+    #@item = Item.new(item_params)
     if @itempurchase_purchase.valid?
-      pay_item
-      @itempurchase_purchase.save
-      redirect_to root_path
+       pay_item
+       @itempurchase_purchase.save
+       redirect_to root_path
     else
       gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
       @item = Item.find(params[:item_id])
