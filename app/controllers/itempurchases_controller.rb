@@ -3,20 +3,12 @@ class ItempurchasesController < ApplicationController
   before_action :set_item, only: [:index, :create]
 
   def index
-  @item = Item.find(params[:item_id])
-  if user_signed_in?
-      if @item.item_purchase.present?
-    redirect_to root_path
-      else
-    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
-    @item = Item.find(params[:item_id])
-    @itempurchase_purchase = ItempurchasePurchase.new
-  end
-  end
-  end
-
-  def new
-    @item_purchase = ItempurchasePurchase.new
+    if @item.item_purchase.present?
+      redirect_to root_path
+    else
+      gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
+      @itempurchase_purchase = ItempurchasePurchase.new
+    end
   end
 
   def create
@@ -28,7 +20,6 @@ class ItempurchasesController < ApplicationController
        redirect_to root_path
     else
       gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
-      @item = Item.find(params[:item_id])
       render :index, status: :unprocessable_entity
     end
   end
