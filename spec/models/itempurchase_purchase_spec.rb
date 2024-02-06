@@ -31,6 +31,12 @@ RSpec.describe ItempurchasePurchase, type: :model do
         expect(@itempurchase_purchase.errors.full_messages).to include "Postal code is invalid. Include hyphen(-)"
       end
 
+      it 'postal_codeが半角のハイフンを含んでいないと保存できないこと' do
+        @itempurchase_purchase.postal_code = '0000000'
+        @itempurchase_purchase.valid?
+        expect(@itempurchase_purchase.errors.full_messages).to include "Postal code is invalid. Include hyphen(-)"
+      end
+
       it 'prefecture_idを選択していないと保存できないこと' do
         @itempurchase_purchase.prefecture_id = 1
         @itempurchase_purchase.valid?
@@ -55,10 +61,40 @@ RSpec.describe ItempurchasePurchase, type: :model do
         expect(@itempurchase_purchase.errors.full_messages).to include "Tel can't be blank"
       end
 
+      it 'telに半角数字以外が含まれると保存できないこと' do
+        @itempurchase_purchase.tel = '000000000０'
+        @itempurchase_purchase.valid?
+        expect(@itempurchase_purchase.errors.full_messages).to include "Tel には数字のみ設定してください"
+      end
+
+      it 'telが9桁以下だと保存できないこと' do
+        @itempurchase_purchase.tel = '123456789'
+        @itempurchase_purchase.valid?
+        expect(@itempurchase_purchase.errors.full_messages).to include "Tel is too short (minimum is 10 characters)"
+      end
+
+      it 'telが12桁以上だと保存できないこと' do
+        @itempurchase_purchase.tel = '123456789012'
+        @itempurchase_purchase.valid?
+        expect(@itempurchase_purchase.errors.full_messages).to include "Tel is too long (maximum is 11 characters)"
+      end
+
       it 'tokenが空だと保存できないこと' do
         @itempurchase_purchase.token = ''
         @itempurchase_purchase.valid?
         expect(@itempurchase_purchase.errors.full_messages).to include "Token can't be blank"
+      end
+
+      it 'user_idが空だと保存できないこと' do
+        @itempurchase_purchase.user_id = ''
+        @itempurchase_purchase.valid?
+        expect(@itempurchase_purchase.errors.full_messages).to include "User can't be blank"
+      end
+
+      it 'item_idが空だと保存できないこと' do
+        @itempurchase_purchase.item_id = ''
+        @itempurchase_purchase.valid?
+        expect(@itempurchase_purchase.errors.full_messages).to include "Item can't be blank"
       end
     end
   end

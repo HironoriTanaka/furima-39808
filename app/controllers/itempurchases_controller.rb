@@ -1,5 +1,6 @@
 class ItempurchasesController < ApplicationController
   before_action :authenticate_user!, except: [:index]
+  before_action :set_item, only: [:index, :create]
 
   def index
   @item = Item.find(params[:item_id])
@@ -36,14 +37,16 @@ class ItempurchasesController < ApplicationController
 
   def itempurchasepurchase_params
     @item = Item.find(params[:item_id])
-    @item_purchase = ItempurchasePurchase.new
     params.require(:itempurchase_purchase).permit(:postal_code, :prefecture_id, :city, :block, :building_name, :tel).merge(user_id: current_user.id, item_id: @item.id, token: params[:token])
+  end
+
+  def set_item
+    @item = Item.find(params[:item_id])
   end
 end
 
 def pay_item
   Payjp.api_key =  ENV["PAYJP_SECRET_KEY"]
-  @itempurchase_purchase = ItempurchasePurchase.new(itempurchasepurchase_params)
   @item = Item.find(params[:item_id])
   Payjp::Charge.create(
     amount: @item.price,

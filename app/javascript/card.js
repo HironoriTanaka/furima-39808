@@ -14,7 +14,6 @@ const pay = () => {
     payjp.createToken(numberElement).then(function (response) {
       if (response.error) {
       } else {
-        console.log(publicKey)
         const token = response.id;
         const renderDom = document.getElementById("charge-form");
         const tokenObj = `<input value=${token} name='token' type="hidden">`;
